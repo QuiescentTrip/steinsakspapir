@@ -1,12 +1,35 @@
 <script>
-	export let name;
+import Game from "./game.svelte"
+import runder from "./game.svelte"
+
+$: if(antall_runder == runder && ingame){
+	ferdig = true 
+	ingame = !ingame
+}
+let antall_runder
+let ferdig = false
+let ingame = false
+function spillet(){
+	ingame = !ingame
+}
+console.log(runder)
 </script>
 
+{#if !ingame && !ferdig}
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>Vennligst velg antall runder</h1>
+	<input bind:value="{antall_runder}">
+	<button on:click="{spillet}">Neste</button>
 </main>
-
+{/if}
+{#if ingame && !ferdig}
+<Game></Game>
+{/if}
+{#if ferdig}
+<main>
+<h1> du er ferdig! </h1>
+</main>
+{/if}
 <style>
 	main {
 		text-align: center;
